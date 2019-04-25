@@ -1,6 +1,4 @@
-FROM mattrayner/lamp:latest-1804
+FROM php/7.3-apache
 
-COPY e2_distr_v3254/* app/
-RUN ls -la app/
-
-CMD ["/run.sh"]
+COPY e2_distr_v3254/* /var/www/html/
+# RUN ls -la app/
