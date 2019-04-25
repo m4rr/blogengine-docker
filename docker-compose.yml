@@ -1,0 +1,11 @@
+version: '3'
+services:
+  blogengine:
+    image: m4rr/blogengine-docker
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=blog.m4rr.ru
+      # - LETSENCRYPT_HOST=
+      # - LETSENCRYPT_EMAIL=
+    ports:
+      - 8080:80
