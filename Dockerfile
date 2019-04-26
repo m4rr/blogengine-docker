@@ -22,4 +22,6 @@ ENV URL https://blogengine.ru/download/${DIST}
 
 RUN curl -c - -O $URL && unzip $DIST -d /var/www/html
 
+RUN chown www-data:www-data /var/www/html/
+
 EXPOSE 80
