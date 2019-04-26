@@ -1,18 +1,21 @@
-FROM php:7.3-apache
+FROM php:5.6-apache
 
-# RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev  unzip git \
+# RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev mysqli unzip git \
 #     && rm -rf /var/lib/apt/lists/* \
 #     && pecl install mcrypt-1.0.2 \
 #     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
 #     && docker-php-ext-install gd mcrypt mbstring mysqli pdo_mysql zip
 
+# RUN add-apt-repository ppa:ondrej/php
+
 RUN apt-get update && apt-get install -y unzip \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
 		libpng-dev \
-	&& docker-php-ext-install -j$(nproc) iconv \
+	&& docker-php-ext-install -j$(nproc) iconv mysqli \
 	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-	&& docker-php-ext-install -j$(nproc) gd
+	&& docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-enable mysqli
 
 RUN a2enmod rewrite actions
 
