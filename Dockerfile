@@ -11,6 +11,6 @@ ENV VERSION 3254
 ENV DIST e2_distr_v${VERSION}.zip
 ENV URL https://blogengine.ru/download/${DIST}
 
-RUN curl -O $URL && unzip $DIST -d /var/www/html
+RUN curl -c - -O $URL && unzip $DIST -d /var/www/html
 
 EXPOSE 80
