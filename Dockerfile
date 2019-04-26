@@ -1,4 +1,4 @@
-FROM php/7.3-apache
+FROM php:7.3-apache
 
 RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev libmcrypt-dev unzip git \
     && rm -rf /var/lib/apt/lists/* \
