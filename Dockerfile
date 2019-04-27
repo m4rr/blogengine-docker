@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7-apache
 
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libmcrypt-dev unzip less \
     && rm -rf /var/lib/apt/lists/* \
