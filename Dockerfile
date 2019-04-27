@@ -19,24 +19,49 @@ FROM php:7-apache
 # 	&& docker-php-ext-install -j$(nproc) gd mbstring zip \
 #     && docker-php-ext-enable mysqli && apachectl restart
 
-
-RUN apk update && apk upgrade
-
-RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev && \
-  docker-php-ext-configure gd \
-    --with-gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ && \
-  NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-  docker-php-ext-install -j${NPROC} gd && \
-  apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
-
-RUN docker-php-source extract 
-RUN docker-php-ext-install mysqli pdo_mysql mbstring
+# RUN a2enmod rewrite actions
 
 
-RUN a2enmod rewrite actions
+# RUN apk update && apk upgrade
+
+# RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev && \
+#   docker-php-ext-configure gd \
+#     --with-gd \
+#     --with-freetype-dir=/usr/include/ \
+#     --with-png-dir=/usr/include/ \
+#     --with-jpeg-dir=/usr/include/ && \
+#   NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+#   docker-php-ext-install -j${NPROC} gd && \
+#   apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+
+# RUN docker-php-source extract 
+# RUN docker-php-ext-install mysqli pdo_mysql mbstring
+
+
+RUN apt-get update -y && apt-get install -y \
+        libpng-dev \
+        libfreetype6-dev \
+        libjpeg-dev \
+        curl less zip unzip \
+        libcurl4-openssl-dev \
+        libxpm-dev \
+        libvpx-dev \
+    && docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/lib/x86_64-linux-gnu/ \
+    --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/ \
+    --with-xpm-dir=/usr/lib/x86_64-linux-gnu/ \
+    --with-vpx-dir=/usr/lib/x86_64-linux-gnu/ \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        gd \
+        curl \
+        mysqli \
+        mbstring \
+    && a2enmod rewrite \
+    && service apache2 restart
+
+
 
 ENV VERSION 3254
 ENV DIST e2_distr_v${VERSION}.zip
