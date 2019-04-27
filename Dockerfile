@@ -1,5 +1,5 @@
-FROM php:7-apache
-
+# FROM php:7-apache
+FROM chialab/php:5.6-apachee
 # RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev mysqli unzip git \
 #     && rm -rf /var/lib/apt/lists/* \
 #     && pecl install mcrypt-1.0.2 \
