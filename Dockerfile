@@ -1,40 +1,15 @@
 FROM php:5.6-apache
 
-# Install PHP extensions and PECL modules.
-RUN buildDeps=" \
-        default-libmysqlclient-dev \
-        libbz2-dev \
-        libmemcached-dev \
-        libsasl2-dev \
-    " \
-    runtimeDeps=" \
-        curl \
-        git \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libmcrypt-dev \
-        libmemcachedutil2 \
-        libpng-dev \
-        libpq-dev \
-        libxml2-dev \
-    " \
-    && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y $buildDeps $runtimeDeps \
-    && docker-php-ext-install bcmath bz2 calendar iconv intl mbstring mcrypt mysql mysqli opcache pdo_mysql zip \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install ldap \
-    && docker-php-ext-install exif \
-    # && pecl install memcached-2.2.0 redis \
-    # && docker-php-ext-enable memcached.so redis.so \
-    && apt-get purge -y --auto-remove $buildDeps \
-    && rm -r /var/lib/apt/lists/* \
-    && a2enmod rewrite
+RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev libmcrypt-dev unzip git \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
+    && docker-php-ext-install gd mcrypt mbstring mysqli pdo_mysql zip
 
-RUN apt-get update && apt-get install -y unzip
+RUN a2enmod rewrite actions
 
+RUN apt-get update && apt-get install -y less
+
+COPY ./php.ini-production /usr/local/etc/php/php.ini
 
 ENV VERSION 3254
 ENV FILENAME e2_distr_v${VERSION}.zip
