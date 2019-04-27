@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y unzip \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
 		libpng-dev \
-	&& docker-php-ext-install -j$(nproc) iconv phpize pdo pdo_mysql  mysqli \
+	&& docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql  mysqli \
 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
 	&& docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable mysqli && apachectl restart
