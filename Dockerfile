@@ -1,20 +1,16 @@
-FROM php:7-apache
+FROM m4rr/normal-php-apache
 
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libmcrypt-dev unzip less \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-    && docker-php-ext-install gd mcrypt mbstring mysqli pdo_mysql zip
+# COPY ./php.ini-production /usr/local/etc/php/php.ini
+# COPY ./data/config/php/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-RUN a2enmod rewrite actions
+# VOLUME [ "/var/www/html" ]
+# RUN chmod 777 -R /var/www/html
+# RUN chown www-data:www-data /var/www/html
 
-COPY ./php.ini-production /usr/local/etc/php/php.ini
+ENV VERSION 3386
+ENV DIST e2_distr_v${VERSION}.zip
+ENV URL https://blogengine.ru/download/${DIST}
 
-ENV VERSION 3254
-ENV FILENAME e2_distr_v${VERSION}.zip
-ENV URL https://blogengine.ru/download/${FILENAME}
-
-RUN curl -c - -O $URL && unzip $FILENAME -d /var/www/html
-
-RUN chown www-data:www-data /var/www/html/
+RUN curl $URL --output $DIST && unzip -o $DIST -d /var/www/html
 
 EXPOSE 80
