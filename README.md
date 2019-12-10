@@ -1,9 +1,17 @@
 ```
-FROM m4rr/normal-php-apache
+version: '3.7'
+services:
 
-WORKDIR /var/www/html
+  db:
+    restart: unless-stopped
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
 
-RUN curl https://blogengine.ru/download/e2_distr_v3386.zip -o a.zip && unzip a.zip
+  blog:
+    restart: unless-stopped
+    image: m4rr/blogengine-docker
+    depends_on:
+      - db
 
-EXPOSE 80
 ```
