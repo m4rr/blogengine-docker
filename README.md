@@ -1,6 +1,6 @@
 # blogengine-docker
 
-eagea docker image: https://hub.docker.com/r/m4rr/blogengine-docker
+Aegea Docker Image: https://hub.docker.com/r/m4rr/blogengine-docker
 
 ## Usage Example 
 
