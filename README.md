@@ -21,3 +21,11 @@ services:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
 
 ```
+
+## How To Upgrade
+
+How to upgrade to the latest build if you're using the Usage Example above:
+
+```sh
+docker-compose up --force-recreate --build -d
+```
