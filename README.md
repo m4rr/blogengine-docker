@@ -1,6 +1,6 @@
 # blogengine-docker
 
-eagea docker image 
+eagea docker image: https://hub.docker.com/r/m4rr/blogengine-docker
 
 ## Usage Example 
 
@@ -10,7 +10,7 @@ services:
 
   blog:
     restart: unless-stopped
-    image: m4rr/blogengine-docker
+    image: m4rr/blogengine-docker:latest
     depends_on:
       - db
       
