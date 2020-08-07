@@ -29,3 +29,7 @@ How to upgrade to the latest build if you're using the Usage Example above:
 ```sh
 docker-compose up --force-recreate --build -d
 ```
+
+## Live 
+
+Check out [same config](https://github.com/m4rr/blog_m4rr_ru_docker) in production: [blog.m4rr.ru](https://blog.m4rr.ru/).
