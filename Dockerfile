@@ -10,6 +10,6 @@ RUN a2enmod proxy \
 && a2enmod proxy_http \
 && a2enmod ssl \
 && a2enmod rewrite \
-&& service apache2 stop
+&& a2enmod headers
 
 EXPOSE 80
